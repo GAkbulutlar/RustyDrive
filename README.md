@@ -1,74 +1,82 @@
-# 🤖 RustyDrive — ROS 2 Robot Controller in Rust
+# 🤖 RustyDrive — ROS 2 Keyboard Teleop in Rust
 
-A keyboard-driven ROS 2 robot controller written in Rust using [`rclrs`](https://github.com/ros2-rust/ros2_rust). Publishes `geometry_msgs/Twist` messages to `/cmd_vel` with smooth velocity ramping, predefined motion patterns, and live telemetry.
+RustyDrive is a keyboard-controlled ROS 2 teleoperation node written in Rust with [`rclrs`](https://github.com/ros2-rust/ros2_rust). It publishes `geometry_msgs/msg/Twist` messages to the `/cmd_vel` topic for robot velocity control.
 
----
+## Features
 
-## 📦 Project Structure
+- Keyboard-based teleoperation
+- ROS 2 integration using `rclrs`
+- Publishes velocity commands to `/cmd_vel`
+- Memory-safe implementation in Rust
+- Smooth velocity control and modular project structure
 
+## Project Structure
+
+```text
 src/
-├── main.rs # Entry point — ROS 2 node setup & main loop
-├── lib.rs # Module exports
-├── config.rs # RobotConfig — speeds, topic name
-├── keyboard_input.rs # Key → KeyCommand mapping + help display
-├── velocity_controller.rs # Smooth velocity ramping with speed clamping
-├── motion_patterns.rs # Predefined patterns: circle, square, figure-eight, spin
-└── telemetry.rs # Session stats: distance, rotation, uptime
+├── main.rs                 # Entry point and ROS 2 node setup
+├── lib.rs                  # Module exports
+├── config.rs               # RobotConfig: speeds and topic settings
+├── keyboard_input.rs       # Key input handling and help display
+├── velocity_controller.rs  # Velocity ramping and clamping
+├── motion_patterns.rs      # Optional predefined motion patterns
+└── telemetry.rs            # Session statistics and runtime telemetry
+```
 
+## Prerequisites
 
----
-
-## 🚀 Prerequisites
-
-| Tool | Version |
-|------|---------|
+| Tool | Recommended Version |
+|------|----------------------|
 | ROS 2 | Jazzy |
 | Rust | stable (1.75+) |
-| ros2_rust / rclrs | 0.7.0 |
+| `rclrs` / `ros2_rust` | 0.7.0 |
 
----
+Make sure your ROS 2 environment and Rust toolchain are installed and configured correctly.
 
-## 🔧 Build
+## Build
 
 ```bash
 source /opt/ros/jazzy/setup.bash
 source ~/ros2_ws/install/setup.bash
-cd ~/ros2_ws/src/robot_controller
+cd ~/ros2_ws/src/RustyDrive
 cargo build
+```
 
+## Run
 
-▶️ Run
-
+```bash
 ./target/debug/robot_controller
+```
 
+## Controls
 
-⌨️ Controls
+| Key | Action |
+|-----|--------|
+| `W` | Move forward |
+| `S` | Move backward |
+| `A` | Turn left |
+| `D` | Turn right |
+| `Space` | Emergency stop |
+| `Q` | Quit and show session summary |
 
-Key	Action
-W	Forward
-S	Backward
-A	Turn Left
-D	Turn Right
-Space	Emergency Stop
-Q	Quit + show session summary
+## Modules
 
-📐 Modules
-config.rs
-Centralised RobotConfig struct. Adjust speeds and the /cmd_vel topic here.
+### `config.rs`
+Defines the `RobotConfig` structure, including speed limits and topic configuration.
 
-velocity_controller.rs
-Ramps velocity toward the target in fixed steps and clamps to configured limits — preventing jerky motion.
+### `velocity_controller.rs`
+Gradually ramps velocity toward target values and clamps motion to configured limits for smoother control.
 
-motion_patterns.rs
-Returns Vec<MotionStep> for autonomous patterns: circle, square, figure_eight, spin_in_place.
+### `motion_patterns.rs`
+Provides reusable autonomous motion patterns such as circle, square, figure-eight, and spin-in-place.
 
-telemetry.rs
-Tracks commands sent, estimated linear distance, and total angular rotation. Prints a summary table on quit.
+### `telemetry.rs`
+Tracks session activity such as commands sent, estimated linear distance, total angular rotation, and uptime.
 
-🧪 Tests
+## Testing
 
+```bash
 cargo test
+```
 
-Unit tests are included in velocity_controller.rs, motion_patterns.rs, and telemetry.rs.
-
-
+Unit tests are included in modules such as `velocity_controller.rs`, `motion_patterns.rs`, and `telemetry.rs`.
