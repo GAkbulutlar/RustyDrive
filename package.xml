@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>robot_controller</name>
+  <version>0.1.0</version>
+  <description>A simple Rust ROS 2 cmd_vel controller</description>
+  <maintainer email="you@example.com">Your Name</maintainer>
+  <license>MIT</license>
+  <depend>rclrs</depend>
+  <depend>geometry_msgs</depend>
+  <export>
+    <build_type>ament_cargo</build_type>
+  </export>
+</package>

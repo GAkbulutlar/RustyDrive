@@ -1,0 +1,13 @@
+[package]
+name = "robot_controller"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "robot_controller"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "*"
+rclrs = { path = "/root/ros2_ws/src/ros2_rust/rclrs" }
+geometry_msgs = { path = "/root/ros2_ws/install/geometry_msgs/share/geometry_msgs/rust" }
